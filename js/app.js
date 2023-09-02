@@ -4,7 +4,6 @@ createApp({
   data() {
     return {
       contacts,
-      message: "casa",
     };
   },
 

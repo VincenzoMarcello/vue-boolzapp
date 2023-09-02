@@ -1,0 +1,88 @@
+/* # RESET AND DEBUG */
+
+p {
+  margin-bottom: 0;
+}
+
+.row {
+  --bs-gutter-x: 0;
+}
+
+.col-4 {
+  background-color: #ffffff;
+}
+
+/* # LAYOUT */
+
+.wrapper {
+  height: 100vh;
+  background-color: #d8dbd4ff;
+  box-shadow: inset 0px 130px 0 0 #009688ff;
+}
+
+.bg-azure {
+  background-color: #8edafc;
+}
+
+.bg-main-chat {
+  flex-grow: 1;
+  background-image: url(../img/mine.jpg);
+}
+
+.bg-grey {
+  background-color: #eaeaea;
+}
+
+.chat-row {
+  min-height: 65px;
+}
+
+.chat-scroll {
+  height: calc(100% - (65px * 3));
+}
+
+.pic-thumb {
+  object-fit: cover;
+  border-radius: 50%;
+  height: 55px;
+  width: 55px;
+}
+
+.text-grey {
+  color: #c4c4c8;
+  font-size: 0.8rem;
+}
+
+.bell-icon {
+  color: #8edafc;
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+}
+
+.border-chat {
+  border-top: 1px solid #f3eeee;
+}
+
+.fa-solid,
+.fa-regular {
+  color: #b1b1b1;
+  cursor: pointer;
+}
+
+.balloon {
+  width: 35%;
+  padding: 1rem;
+  margin: 0.8rem 3rem;
+  border-radius: 10px;
+}
+.sent {
+  background-color: #d5f9ba;
+}
+
+.received {
+  background-color: white;
+}
