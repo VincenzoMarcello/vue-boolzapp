@@ -8,10 +8,6 @@ p {
   --bs-gutter-x: 0;
 }
 
-.col-4 {
-  background-color: #ffffff;
-}
-
 /* # LAYOUT */
 
 .wrapper {
@@ -20,20 +16,19 @@ p {
   box-shadow: inset 0px 130px 0 0 #009688ff;
 }
 
-.bg-azure {
-  background-color: #8edafc;
+.col-4 {
+  background-color: #ffffff;
 }
 
-.bg-main-chat {
-  flex-grow: 1;
-  background-image: url(../img/mine.jpg);
+.bg-azure {
+  background-color: #8edafc;
 }
 
 .bg-grey {
   background-color: #eaeaea;
 }
 
-.chat-row {
+.contact-line {
   min-height: 65px;
 }
 
@@ -41,7 +36,7 @@ p {
   height: calc(100% - (65px * 3));
 }
 
-.pic-thumb {
+.pic-user {
   object-fit: cover;
   border-radius: 50%;
   height: 55px;
@@ -67,22 +62,47 @@ p {
   border-top: 1px solid #f3eeee;
 }
 
-.fa-solid,
-.fa-regular {
+i {
   color: #b1b1b1;
   cursor: pointer;
 }
 
-.balloon {
-  width: 35%;
-  padding: 1rem;
-  margin: 0.8rem 3rem;
-  border-radius: 10px;
-}
-.sent {
-  background-color: #d5f9ba;
+/* # MESSAGE SPACE */
+
+.messages {
+  flex-grow: 1;
+  background-image: url(../img/mine.jpg);
+  padding: 0.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.received {
+.message {
+  width: 40%;
+  padding: 1rem 1rem 0 1rem;
+
+  border-radius: 10px;
+  align-self: flex-start;
+}
+
+.message.sent {
+  background-color: #d5f9ba;
+
+  align-self: flex-end;
+}
+
+.message.received {
   background-color: white;
+}
+
+.active,
+.hover-row:hover {
+  background-color: #eaeaea;
+  cursor: pointer;
+}
+
+.time-text {
+  align-self: flex-end;
 }

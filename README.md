@@ -30,12 +30,6 @@
 
 - Cancella messaggio: cliccando sul messaggio appare un menu a tendina che
   permette di cancellare il messaggio selezionato
-  Consigli utili:
-- Si possono trascurare le scrollbar verticali, sia nel pannello dei messaggi, che nella
-  lista dei contatti
-- I pulsanti e le icone possono non funzionare (a parte l’invio del messaggio)
-- Per gestire le date, può essere utile la libreria Luxon
-- La struttura dell’array dei contatti potrebbe avere questa forma:
 
 ### Consigli utili:
 
@@ -48,3 +42,10 @@
 
 - inziamo impostando l'HTML statico
 - visualizzo dinamicamente i contatti tramite il v-for
+- creando un v-for con un indice vedo dinamicamente
+  i messaggi in base al contatto
+- collego un input che alla pressione dell'enter
+  pusherà il messaggio nell'array di messaggi
+- dopo un secondo arriva una risposta "ok"
+- colleghiamo la barra a destra che cercherà
+  il contatto che abbiamo messo nel barra

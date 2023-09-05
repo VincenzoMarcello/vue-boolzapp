@@ -31,12 +31,14 @@
     <div class="wrapper" id="app">
       <div class="container h-100">
         <div class="row h-100 py-3">
-          <!-- COL CHAT -->
+          <!-- COL CONTACTS -->
           <div class="col-4">
-            <!-- HEAD -->
-            <div class="d-flex justify-content-between chat-row bg-grey px-2">
+            <!-- MY CONTACT -->
+            <div
+              class="d-flex justify-content-between contact-line bg-grey px-2"
+            >
               <div class="d-flex align-items-center">
-                <img src="img/avatar_io.jpg" class="pic-thumb" alt="" />
+                <img src="img/avatar_io.jpg" class="pic-user" alt="" />
                 <p>Sofia</p>
               </div>
 
@@ -47,44 +49,66 @@
               </div>
             </div>
 
-            <!-- SUB HEAD -->
-            <div class="d-flex align-items-center bg-azure chat-row px-2">
+            <!-- DISCLAIMER -->
+            <div class="d-flex align-items-center contact-line bg-azure px-2">
               <div>
                 <i class="fa-solid fa-bell-slash fs-5 bell-icon"></i>
               </div>
               <div class="ps-2">
                 <p>Ricevi notifiche di nuovi messaggi</p>
-                <a href="°" class="link-secondary">Attiva notifiche desktop</a>
+                <a href="#" class="link-secondary">Attiva notifiche desktop</a>
               </div>
             </div>
-            <!-- INPUT TEXT -->
-            <div class="d-flex align-items-center chat-row px-2">
+
+            <!-- SEARCH-BAR -->
+            <div class="d-flex align-items-center contact-line px-2">
               <div class="input-group">
                 <span class="input-group-text" id="inputGroup-sizing-default"
                   ><i class="fa-solid fa-magnifying-glass"></i
                 ></span>
+                <!-- colleghiamo la barra tramite v-model -->
+                <!-- al rilascio di ogni tasto della tastiera invocherà il metodo
+                che controlla le lettere e mette true o false in base a se i contact le contengono o no -->
                 <input
                   placeholder="Cerca o inizia una nuova chat"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
+                  v-model="searchText"
+                  @keyup="searchContacts()"
                 />
               </div>
             </div>
 
-            <!-- CHATS  -->
+            <!-- CONTACS LIST  -->
             <div class="overflow-y-scroll chat-scroll">
-              <div class="d-flex p-2 border-chat" v-for="chat in contacts">
-                <div class="d-flex align-items-center">
-                  <img :src="chat.avatar" class="pic-thumb" />
-                  <div class="ms-2">
-                    <p>{{ chat.name }}</p>
-                    <p class="text-grey">Ultimo messaggio inviato</p>
+              <!-- facciamo un v-for per stampare dinamicamente i contatti con relative foto -->
+              <!-- mettiamo anche l'indice che ci servirà per collegarlo alla proprietà activeContact -->
+              <!-- al click del mouse invochiamo la funzione del contatto selezionato
+              che in base al contatto cliccato cambia l'activeContact -->
+              <div
+                v-for="(contact,index) in contacts"
+                @click="selectContact(index)"
+              >
+                <!-- facciamo un bind sulla classe e usiamo un ternario -->
+                <!-- se il contatto attivo è uguale all'indice aggiungiamo la classe "active" -->
+                <!-- altrimenti no -->
+                <div
+                  class="d-flex p-2 border-chat hover-row"
+                  v-if="contact.visible"
+                  :class="(activeContact == index)? 'active' : ''"
+                >
+                  <div class="d-flex align-items-center">
+                    <img :src="contact.avatar" class="pic-user" />
+                    <div class="ms-2">
+                      <p>{{ contact.name }}</p>
+                      <p class="text-grey">Ultimo messaggio inviato</p>
+                    </div>
                   </div>
-                </div>
-                <div class="text-grey ms-auto">
-                  <p>12:00</p>
+                  <div class="text-grey ms-auto">
+                    <p>12:00</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -92,11 +116,16 @@
 
           <!-- COL MESSAGE -->
           <div class="col-8 d-flex flex-column">
-            <div class="d-flex justify-content-between chat-row bg-grey">
+            <div class="d-flex justify-content-between contact-line bg-grey">
               <div class="d-flex align-items-center">
-                <img src="img/avatar_1.jpg" class="pic-thumb" alt="" />
+                <!-- usiamo il contatto attivo per cambiare dinamicamente anche il nome e la pic nell'altra colonna -->
+                <img
+                  :src="contacts[activeContact].avatar"
+                  class="pic-user"
+                  alt=""
+                />
                 <div class="ms-2">
-                  <p>Michele</p>
+                  <p>{{ contacts[activeContact].name}}</p>
                   <p class="text-grey">Ultimo accesso oggi alle 12:00</p>
                 </div>
               </div>
@@ -107,36 +136,51 @@
                 <i class="fa-solid fa-ellipsis-vertical fs-4 me-3"></i>
               </div>
             </div>
-            <div class="bg-main-chat">
-              <div class="d-flex justify-content-end">
-                <div class="balloon sent">Hai portato a spasso il cane?</div>
+
+            <!-- MESSAGE SPACE -->
+            <div class="messages">
+              <!-- con il v-for cicliamo i messaggi nell'array di messaggi -->
+              <!-- mettiamo un bind per aggiungere la classe send o received in base alla proprietà status -->
+              <div
+                v-for="message in contacts[activeContact].messages"
+                class="message d-flex flex-column"
+                :class="message.status"
+              >
+                <div class="d-flex justify-content-between">
+                  <div>{{ message.message }}</div>
+                  <div><i class="fa-solid fa-chevron-down"></i></div>
+                </div>
+                <div class="time-text text-grey">{{ message.date }}</div>
               </div>
-              <div class="d-flex justify-content-end">
-                <div class="balloon sent">Ricordati di stendere i panni</div>
-              </div>
-              <div>
-                <div class="balloon received">Tutto fatto!</div>
-              </div>
+              <!-- <div class="message sent">Ricordati di stendere i panni</div>
+              <div class="message received">Tutto fatto!</div> -->
             </div>
-            <div
-              class="chat-row d-flex justify-content-between align-items-center bg-grey"
+
+            <!-- FOOTER -->
+            <footer
+              class="d-flex justify-content-between contact-line align-items-center bg-grey"
             >
               <div>
                 <i class="fa-regular fa-face-smile fs-4 mx-3"></i>
               </div>
               <div class="input-group">
+                <!-- colleghiamo la barra con il v-model e al rilascio del tasto enter
+                invochiamo la funzione che pusha il messaggio nell'array e invia un
+                messaggio di risposta dopo 1S -->
                 <input
                   placeholder="Scrivi un messaggio"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
+                  v-model="newMessage"
+                  @keyup.enter="submitNewMessage()"
                 />
               </div>
               <div>
                 <i class="fa-solid fa-microphone fs-4 mx-3"></i>
               </div>
-            </div>
+            </footer>
           </div>
         </div>
       </div>
